@@ -27,8 +27,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}catalog.json
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
       - name: Build catalog.json
@@ -38,8 +38,8 @@ jobs:
           node scripts/build-catalog.mjs --out public/catalog.json
           cp README.md public/README.md
           printf '<!doctype html><meta charset="utf-8"><title>Git Gud Gym registry</title><p>The game library lives in <a href="catalog.json">catalog.json</a>. See <a href="https://github.com/Git-Gud-Gym/registry">Git-Gud-Gym/registry</a>.</p>\n' > public/index.html
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: public
       - id: deploy
