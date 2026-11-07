@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: A bug in Git Gud Gym itself
+    url: https://github.com/Git-Gud-Gym/launcher/issues/new/choose
+    about: Problems with the app, the library or the overlay.
+  - name: A bug in a game module
+    url: https://github.com/orgs/Git-Gud-Gym/repositories?q=module-
+    about: Open it in that game's module-<game> repository.

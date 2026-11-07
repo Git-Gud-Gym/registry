@@ -1,0 +1,30 @@
+name: Game request
+description: Ask for Git Gud Gym to support another game.
+labels: [game request]
+body:
+  - type: markdown
+    attributes:
+      value: Search existing requests first and 👍 the one you want instead of opening a duplicate.
+  - type: input
+    id: game
+    attributes:
+      label: Game
+      placeholder: "Sekiro: Shadows Die Twice"
+    validations:
+      required: true
+  - type: input
+    id: store
+    attributes:
+      label: Store and version
+      placeholder: "Steam, patch 1.06"
+  - type: textarea
+    id: bosses
+    attributes:
+      label: Which bosses would you practice?
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Can you help?
+      options:
+        - label: I can test builds in this game.
+        - label: I know (or can find) the game's memory layout / Cheat Engine tables.

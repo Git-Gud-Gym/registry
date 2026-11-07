@@ -1,0 +1,46 @@
+name: Publish catalog
+
+# Rebuilds catalog.json from the module and launcher releases and serves it from GitHub Pages:
+#   https://git-gud-gym.github.io/registry/catalog.json
+# Runs on every change here, every 30 minutes (to pick up new releases), and on demand (module and
+# launcher release workflows trigger it when they have a REGISTRY_DISPATCH_TOKEN secret).
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}catalog.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build catalog.json
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node scripts/build-catalog.mjs --out public/catalog.json
+          cp README.md public/README.md
+          printf '<!doctype html><meta charset="utf-8"><title>Git Gud Gym registry</title><p>The game library lives in <a href="catalog.json">catalog.json</a>. See <a href="https://github.com/Git-Gud-Gym/registry">Git-Gud-Gym/registry</a>.</p>\n' > public/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - id: deploy
+        uses: actions/deploy-pages@v4

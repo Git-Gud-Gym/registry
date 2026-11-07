@@ -1,0 +1,6 @@
+{
+  "launcher": "Git-Gud-Gym/launcher",
+  "modules": [
+    { "id": "eldenring", "repo": "Git-Gud-Gym/module-eldenring" }
+  ]
+}
