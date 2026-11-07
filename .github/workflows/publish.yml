@@ -39,7 +39,7 @@ jobs:
           cp README.md public/README.md
           printf '<!doctype html><meta charset="utf-8"><title>Git Gud Gym registry</title><p>The game library lives in <a href="catalog.json">catalog.json</a>. See <a href="https://github.com/Git-Gud-Gym/registry">Git-Gud-Gym/registry</a>.</p>\n' > public/index.html
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: public
       - id: deploy
