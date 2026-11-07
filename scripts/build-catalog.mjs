@@ -61,13 +61,16 @@ const describeFile = async (asset) => {
 };
 
 async function launcherEntry(repo) {
+  // Releases from v0.3.2 ship GitGudGym.exe directly; older ones only have a zip.
+  const isExe = (a) => a.name === 'GitGudGym.exe';
   const isZip = (a) => /^GitGudGym-v.*\.zip$/.test(a.name);
-  const found = await latestRelease(repo, (r) => r.assets.some(isZip));
+  const found = await latestRelease(repo, (r) => r.assets.some((a) => isExe(a) || isZip(a)));
   if (!found) return null;
+  const asset = found.release.assets.find(isExe) ?? found.release.assets.find(isZip);
   return {
     version: found.version,
     releaseUrl: found.release.html_url,
-    download: await describeFile(found.release.assets.find(isZip)),
+    download: await describeFile(asset),
   };
 }
 
